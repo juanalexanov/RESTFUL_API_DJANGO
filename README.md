@@ -1,2 +1,5 @@
 # RESTFUL_API_DJANGO
 TEST PROGRAMMING FAST PRINT - JUAN ALEXANOV
+
+username = user
+password = user
