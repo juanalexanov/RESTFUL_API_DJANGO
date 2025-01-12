@@ -1,0 +1,12 @@
+{% extends "myapp/layout.html" %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to Test Programming by Juan Alexanov</h1>
+        <p class="lead">Manage produk dari API FastPrint yang telah diberikan</p>
+        <hr class="my-4"></hr>
+        <p>Use the navigation bar to add, view, update or delete products</p>
+        <a href="{% url 'produk_list' %}" class="btn btn-primary btn-lg" role="button">Show Products</a>
+    </div>
+{% endblock %}

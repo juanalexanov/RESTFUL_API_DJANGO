@@ -1,0 +1,49 @@
+{% extends "myapp/layout.html" %}
+
+{% block title %} Add Product {% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Product Form</h1>
+    <form method="POST" class="jumbotron">
+        {% csrf_token %}
+        
+        <!-- Nama Produk -->
+        <div class="form-group">
+            <label for="id_nama_produk">{{ form.nama_produk.label }}</label>
+            {{ form.nama_produk }}
+            {% for error in form.nama_produk.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+
+        <!-- Harga -->
+        <div class="form-group">
+            <label for="id_harga">{{ form.harga.label }}</label>
+            {{ form.harga }}
+            {% for error in form.harga.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+
+        <!-- Kategori -->
+        <div class="form-group">
+            <label for="id_kategori">{{ form.kategori.label }}</label>
+            {{ form.kategori }}
+            {% for error in form.kategori.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+            <label for="id_status">{{ form.status.label }}</label>
+            {{ form.status }}
+            {% for error in form.status.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+
+        <br>
+        <button class="btn btn-success btn-block" type="submit">Save Product</button>
+    </form>
+{% endblock %}

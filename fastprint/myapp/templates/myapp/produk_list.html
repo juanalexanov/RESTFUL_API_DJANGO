@@ -1,0 +1,97 @@
+{% extends "myapp/layout.html" %}
+
+{% block title %} Product List {% endblock %}
+
+{% block content %}
+<h1 class="text-center">Products</h1>
+
+<!-- Tambahkan kontainer scroll -->
+<div style="max-height: 700px; overflow-y: auto; border: 1px solid #ddd; position: relative;">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark" style="position: sticky; top: 0; z-index: 1000;">
+            <tr>
+                <th>Product ID</th>
+                <th class="text-center">Product Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="product-table-body">
+            
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Fungsi untuk memuat data produk dari API
+    async function loadProducts() {
+        try {
+            const response = await fetch('/api/produks/filter/status/');
+            if (!response.ok) {
+                throw new Error('Failed to fetch products.');
+            }
+            const products = await response.json();
+
+            // Dapatkan elemen tabel
+            const tableBody = document.getElementById('product-table-body');
+            tableBody.innerHTML = ''; 
+
+            
+            products.forEach((product) => {
+                const row = `
+                    <tr id="product-row-${product.id_produk}">
+                        <td class="text-center">${product.id_produk}</td>
+                        <td class="text-center">${product.nama_produk}</td>
+                        <td>${product.harga}</td>
+                        <td>${product.kategori}</td>
+                        <td>${product.status}</td>
+                        <td>
+                            <a href="/update/${product.id_produk}/" class="btn btn-warning">Update</a>
+                            <button class="btn btn-danger" 
+                                    onclick="deleteProduct('${product.id_produk}', '${product.nama_produk}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while loading products.');
+        }
+    }
+
+    // Panggil fungsi untuk memuat produk saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', loadProducts);
+
+    // Fungsi untuk menghapus produk
+    async function deleteProduct(productId, productName) {
+        const confirmAction = confirm(`Are you sure you want to delete the product: "${productName}"?`);
+        if (!confirmAction) return;
+
+        try {
+            const response = await fetch(`/delete/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                const row = document.getElementById(`product-row-${productId}`);
+                if (row) {
+                    row.remove();
+                    alert(`Product "${productName}" has been deleted successfully.`);
+                }
+            } else {
+                alert(result.error || 'Failed to delete the product.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the product.');
+        }
+    }
+</script>
+{% endblock %}
