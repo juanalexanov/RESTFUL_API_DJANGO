@@ -67,13 +67,13 @@ MIDDLEWARE = [
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # Masa berlaku access token
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Masa berlaku refresh token
-    'ROTATE_REFRESH_TOKENS': True,                  # Opsi untuk merotasi refresh token
-    'BLACKLIST_AFTER_ROTATION': True,               # Blacklist refresh token setelah rotasi
-    'ALGORITHM': 'HS256',                           # Algoritma token
-    'SIGNING_KEY': SECRET_KEY,                      # Kunci penandatanganan
-    'AUTH_HEADER_TYPES': ('Bearer',),               # Tipe header untuk token
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     
+    'ROTATE_REFRESH_TOKENS': True,                  
+    'BLACKLIST_AFTER_ROTATION': True,               
+    'ALGORITHM': 'HS256',                           
+    'SIGNING_KEY': SECRET_KEY,                      
+    'AUTH_HEADER_TYPES': ('Bearer',),               
 }
 
 
